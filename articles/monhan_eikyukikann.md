@@ -1,10 +1,12 @@
 ---
-title: "モンハンで永久機関を発見しました"
-emoji: "🚂"
+title: "Raspberry Pi を使って物体検知をやってみる"
+emoji: "📷"
 type: idea
-topics: [モンハン, 永久機関]
+topics: [Ras pi,物体検知 ]
 published: false
 ---
-#モンハンで誰もが憧れる永久機関を発見しました。
+# Raspberry Pi 使って物体検知をしてみる
+ここではラズパイの初期設定はこちらを参考にしています。
+https://x-tech.pasona.co.jp/media/detail.html?p=9013
+## まずはpythonの仮想環境を作っていきます。
 
-https://youtu.be/dBc01tK4bww?si=XL00WXvGwieH8C6-
