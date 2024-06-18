@@ -3,7 +3,7 @@ title: "7セグクロック"
 emoji: "⌚"
 type: idea
 topics: [ESP32,neopixel,Arduino IDE]
-published: false
+published: true
 ---
 # こんにちは
 専門学校の2年生のNKです。
