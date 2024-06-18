@@ -14,6 +14,10 @@ published: false
 neopixelを木の板に張り付けそれを配線していきました。全部で50箇所ぐらいのVCCとGND、信号線を先生にも手伝ってもらいながらはんだ付けしました。とても集中力がいる作業で途中で諦めそうになりましたが最後まで踏ん張って頑張りました。
 ## 次にntpサーバーから受け取った時間をneopixelで表示するプログラムです
 ```c++
+#define PIN 27        //INが接続されているピンを指定
+#define NUMPIXELS 74  //LEDの数を指定
+//プロトタイプ宣言
+void ShowTime(int hour, int minute);
 const int digitSegments[10][18] = {
   { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 },  // 0
   { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 },  // 1
@@ -74,9 +78,72 @@ void ShowTime(int hour, int minute) {
   pixels.setPixelColor(37, pixels.Color(flag*100, flag*100, flag*100));
 
 
-  pixels.show();  //LEDに色を反映
-  
-  
+  pixels.show();  //LEDに色を反映  
 }
 ```
+このコードではひとつのセルのneopixelのLEDの数が18個ありそれを操作して0～9までの数字を表現しています。そのためにdigitSegmentsというリストを作り0～9までの数字一つ一つに0と1の組み合わせを割り当てています。最初は0か1ではなく0～18の数字を使って操作しようとしていましたが、余計なLEDが光ったりとバグが出てしまったので0か1にしました。そのおかげでソース自体を見やすくなり色を変えたりと新しい機能を追加したりできました。
 
+## 最後にサーバーからこの7セグクロックの時間操作をできるようにする機能を追加しました
+皆さん授業中に時計進の遅いと思いませんか？
+僕は思います。なのでこの時計に時間操作をできる機能をつけて授業を早く終わらせてやろうと思いました。
+```c++
+void ClockOperation(){
+  if (millis() - waitingtime >= 1000) {   //プログラムが経過した時間が1秒経ったら
+    waitingtime = millis();   //基準時間に現在時間を代入
+    if (WiFi.status() == WL_CONNECTED) {
+      HTTPClient http;
+
+      // URLの設定
+      http.begin(serverUrl);
+
+      // GETリクエストの送信
+      int httpResponseCode = http.GET();
+
+      if (httpResponseCode > 0) {
+      //   // HTTPレスポンスコードを表示
+        //Serial.print("HTTP Response code: ");
+        //Serial.println(httpResponseCode);
+
+      //   // ペイロードの取得と表示
+        String payload = http.getString();
+        //Serial.println("Received payload:");
+        //Serial.println(payload);
+
+        int dataInt = payload.toInt();
+        int time[2];
+        
+        if (dataInt == 9999){//ntpみにいく
+          life = 1;
+        }else if(dataInt == 9998){//ntpみにいかない　カウントアップのみ
+          life = 2;
+          change =0;
+        }else{
+          for (int i = 1; i >= 0; i--){
+            time[i] = dataInt % 100;
+            dataInt = (dataInt - time[i]) / 100;
+          }
+          life = 0;
+          timeInfo.tm_hour = time[0];
+          timeInfo.tm_min = time[1];
+
+          Serial.print(timeInfo.tm_hour);
+          Serial.print(timeInfo.tm_min);
+        }
+        //Serial.println("Data content copied to another variable:");
+        //Serial.print(dataInt);
+
+      } else {
+        Serial.print("Error code: ");
+        Serial.println(httpResponseCode);
+      }
+
+      // リクエストを終了
+      http.end();
+    } else {
+      Serial.println("WiFi Disconnected");
+    }
+    // 過剰なリクエストを避けるために遅延を追加  // 必要に応じて遅延を調節
+  }
+  delay(100);
+}
+```
