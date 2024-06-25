@@ -15,7 +15,7 @@ neopixelを木の板に張り付けそれを配線していきました。全部
 ## 次に時間を表示するプログラムです
 ntpサーバーから受け取った時間をneopixelで表示します。
 :::details neopixelの表示
-```c++
+```c
 #define PIN 27        //INが接続されているピンを指定
 #define NUMPIXELS 74  //LEDの数を指定
 //プロトタイプ宣言
