@@ -1,6 +1,6 @@
 ---
 title: "NeoPixelで時間を操る！私たちのオーロラレボリューションクロック"
-emoji: "⌚"
+emoji: "⏰"
 type: idea
 topics: [ESP32,neopixel,Arduino IDE]
 published: true
