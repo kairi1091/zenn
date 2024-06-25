@@ -5,7 +5,7 @@ type: idea
 topics: [ESP32,neopixel,Arduino IDE]
 published: true
 ---
-# こんにちは
+## こんにちは
 専門学校の2年生のFGノットです。
 今回は授業でクラスのみんなと作ったオーロラレボリューションクロックの私が担当した3つの部分について説明したいと思います。
 ![](/images/IMG_0451.jpg)
