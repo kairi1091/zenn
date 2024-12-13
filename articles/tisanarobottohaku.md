@@ -3,7 +3,7 @@ title: "小さなロボット博に出展してみて"
 emoji: "🚙"
 type: idea
 topics: [neopixel,microbit]
-published: false
+published: true
 ---
 ## こんにちは
 専門学校の2年生のペタパンです。
