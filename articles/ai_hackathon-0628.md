@@ -3,7 +3,7 @@ title: "生成AIハッカソンに参加してみて"
 emoji: "🤖"
 type: idea
 topics: [生成AI]
-published: true
+published: false
 ---
 ## こんにちは
 三年生になりました、ペタパンです。
