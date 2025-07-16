@@ -1,6 +1,6 @@
 ---
 title: "生成AIハッカソンに参加してみて"
-emoji: "ロボット"
+emoji: "🤖"
 type: idea
 topics: [生成AI]
 published: true
